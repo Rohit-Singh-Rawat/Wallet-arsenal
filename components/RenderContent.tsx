@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import GenerateWallet from './shared/GenerateWallet';
 import MnemoicCard from './MnemoicCard';
-import { Loader2, Trash2 } from 'lucide-react';
+import {  Loader2, Trash2 } from 'lucide-react';
 import WalletComponent from './shared/Wallet';
 import { Button } from './ui/button';
 import { generateKeys } from '@/lib/utils';
@@ -19,6 +19,9 @@ import {
 	AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import {  AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
+import Eth from './icons/Eth';
+import Sol from './icons/Sol';
 
 const RenderContent = () => {
 	const [wallets, setWallets] = useState<
@@ -40,7 +43,7 @@ const RenderContent = () => {
 		
 		const existingWalletsOfType = wallets.filter(w => w.type === type);
 		
-		if (existingWalletsOfType.length >= 5) {
+		if (existingWalletsOfType.length >= 4) {
 			toast.error(`You can't add more than 5 ${type} wallets.`);
 			return;
 		}
@@ -105,7 +108,33 @@ const RenderContent = () => {
 			{wallets && mnemonics ? (
 				<>
 					<MnemoicCard mnemonics={mnemonics} />
-					<div className='flex justify-center md:justify-end w-full space-x-4 my-6'>
+					<div className='flex justify-center md:justify-between flex-wrap gap-5 w-full space-x-4 my-6 '>
+						<div className='flex space-x-4'>
+							<Link
+								href='/https://cloud.google.com/application/web3/faucet/ethereum/holesky'
+								target='_blank'
+								passHref
+							>
+								<button className='rounded-lg w-44 p-[10px] px-5 bg-gradient-to-r from-[#8C8C8C] via-[#343434] to-[#141414] text-white font-bold flex items-center justify-center gap-2 group transition-all duration-300 active:bg-gradient-to-r active:from-[#7C7C7C] active:via-[#242424] active:to-[#040404] overflow-hidden'>
+									<span className='transition-opacity duration-300 ease-in-out opacity-100 group-hover:opacity-0 delay-300 group-hover:delay-0'>
+										Receive ETH
+									</span>
+									<Eth className='transition-transform duration-500 group-hover:delay-300 ease-in-out group-hover:scale-[3.2] group-hover:-translate-x-14 group-hover:translate-y-2 size-[18px] fill-current' />
+								</button>
+							</Link>
+							<Link
+								href='https://faucet.solana.com/'
+								target='_blank'
+								passHref
+							>
+								<button className='rounded-lg w-44 p-[10px] px-5 text-white/80 font-bold flex items-center justify-center gap-2 group transition-all duration-300 bg-gradient-to-r from-[#14F095] to-[#9847FE] overflow-hidden'>
+									<span className='transition-opacity duration-300 ease-in-out opacity-100 group-hover:opacity-0 delay-300 group-hover:delay-0'>
+										Receive SOL
+									</span>
+									<Sol className='transition-transform duration-500 group-hover:delay-300 ease-in-out group-hover:scale-[3.2] group-hover:-translate-x-14 group-hover:translate-y-2 size-[18px] fill-current' />
+								</button>
+							</Link>
+						</div>
 						<AlertDialog>
 							<AlertDialogTrigger asChild>
 								<button className='rounded-lg w-44 p-[10px] px-5 bg-red-600 text-white font-bold flex items-center justify-center gap-2 group transition-all duration-300 active:bg-red-900 overflow-hidden'>
@@ -135,13 +164,13 @@ const RenderContent = () => {
 						</AlertDialog>
 					</div>
 					<div className='grid lg:grid-cols-2 gap-x-8 gap-y-16 mb-10 justify-items-center w-full'>
-						<div className='w-full max-w-md space-y-14'>
+						<div className='w-full max-w-md space-y-14 lg:justify-self-start'>
 							<div className='flex items-center justify-between mb-4 px-2'>
 								<h2 className='text-3xl font-bold'>Solana Wallets</h2>
 								<Button
 									onClick={() => addNewWallet('solana')}
 									className='bg-white text-black font-semibold hover:bg-white/80'
-									disabled={wallets.filter(w => w.type === 'solana').length >= 5}
+									disabled={wallets.filter((w) => w.type === 'solana').length >=4}
 								>
 									Add Wallet
 								</Button>
@@ -167,13 +196,13 @@ const RenderContent = () => {
 								</AnimatePresence>
 							</div>
 						</div>
-						<div className='w-full max-w-md space-y-14'>
+						<div className='w-full max-w-md space-y-14 lg:justify-self-end'>
 							<div className='flex items-center  justify-between  px-2'>
 								<h2 className='text-3xl font-bold'>Ethereum Wallets</h2>
 								<Button
 									onClick={() => addNewWallet('ethereum')}
 									className='bg-white text-black font-semibold hover:bg-white/80'
-									disabled={wallets.filter(w => w.type === 'ethereum').length >= 5}
+									disabled={wallets.filter((w) => w.type === 'ethereum').length >= 4}
 								>
 									Add Wallet
 								</Button>
@@ -184,15 +213,14 @@ const RenderContent = () => {
 										wallets
 											.filter((wallet) => wallet.type === 'ethereum')
 											.map((wallet, index) => (
-											
-													<WalletComponent
+												<WalletComponent
 													key={wallet.publicKeyEncoded}
-														type={wallet.type}
-														publicKeyEncoded={wallet.publicKeyEncoded}
-														privateKeyEncoded={wallet.privateKeyEncoded}
-														walletName={`Ethereum Wallet ${index + 1}`}
-														onDelete={() => deleteWallet(wallet.type, wallet.publicKeyEncoded)}
-													/>
+													type={wallet.type}
+													publicKeyEncoded={wallet.publicKeyEncoded}
+													privateKeyEncoded={wallet.privateKeyEncoded}
+													walletName={`Ethereum Wallet ${index + 1}`}
+													onDelete={() => deleteWallet(wallet.type, wallet.publicKeyEncoded)}
+												/>
 											))
 									) : (
 										<div className='text-center text-gray-500'>No Ethereum wallets exist</div>

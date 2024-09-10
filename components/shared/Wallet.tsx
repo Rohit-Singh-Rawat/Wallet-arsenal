@@ -15,14 +15,14 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from 'sonner';
-
+import { useBalance } from '@/lib/utils';
 const walletVariants = {
 	initial: { opacity: 0, y: 20, scale: 0.9 },
 	animate: { opacity: 1, y: 0, scale: 1 },
-	exit: { opacity: 0, y: -20},
+	exit: { opacity: 0, y: -20 },
 };
-
 const Wallet = ({
 	type,
 	walletName,
@@ -37,6 +37,11 @@ const Wallet = ({
 	onDelete: () => void;
 }) => {
 	const [showPrivateKey, setShowPrivateKey] = useState(false);
+
+	const {
+		data: balance,
+		isLoading,	
+	} = useBalance(type as 'ethereum' | 'solana', publicKeyEncoded);
 
 	return (
 		<motion.div
@@ -66,7 +71,13 @@ const Wallet = ({
 					)}
 					<div className='flex h-8 flex-col items-start justify-center text-left'>
 						<span className='text-[10px] text-black/90'>{walletName}</span>
-						<span className='text-sm text-black font-semibold text-left'>$ 20,0</span>
+						{isLoading ? (
+							<Skeleton className='h-4 w-20' />
+						) : (
+							<span className='text-sm text-black font-semibold text-left'>
+								 {balance?.toString() || '0.00'} {type === 'ethereum' ? 'ETH' : 'SOL'}
+							</span>
+						)}
 					</div>
 				</div>
 				<AlertDialog>

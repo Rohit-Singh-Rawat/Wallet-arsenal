@@ -105,7 +105,7 @@ const RenderContent = () => {
 			{wallets && mnemonics ? (
 				<>
 					<MnemoicCard mnemonics={mnemonics} />
-					<div className='flex justify-end w-full space-x-4 my-6'>
+					<div className='flex justify-center md:justify-end w-full space-x-4 my-6'>
 						<AlertDialog>
 							<AlertDialogTrigger asChild>
 								<button className='rounded-lg w-44 p-[10px] px-5 bg-red-600 text-white font-bold flex items-center justify-center gap-2 group transition-all duration-300 active:bg-red-900 overflow-hidden'>

@@ -46,7 +46,7 @@ const GenerateWallet = ({
 
 	return (
 		<>
-			<div className='text-5xl xl:w-2/3 w-full text-center font-bold pt-[30vh]'>
+			<div className='text-3xl md:text-5xl xl:w-2/3 w-full text-center font-bold pt-[30vh]'>
 				Craft{' '}
 				<span className='bg-gradient-to-r bg-clip-text text-transparent from-[#14F095] to-[#9847FE]'>
 					wallets

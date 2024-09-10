@@ -6,7 +6,8 @@ import { Keypair } from '@solana/web3.js';
 import bs58 from 'bs58';
 import nacl from 'tweetnacl';
 import { toast } from 'sonner';
-import { ethers } from 'ethers';
+import { Wallet } from 'ethers';
+import { HDNodeWallet } from 'ethers';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -23,22 +24,23 @@ export const generateKeys = ({
 	try {
 		const seed = mnemonicToSeedSync(mnemonic);
 		const path = `m/44'/${pathType}'/0'/0'/${accountIndex}'`;
-		const derivedSeed = derivePath(path, seed.toString('hex')).key;
 
 		let publicKeyEncoded: string;
 		let privateKeyEncoded: string;
 		if (pathType === '501') {
+			const derivedSeed = derivePath(path, seed.toString('hex')).key;
 			const { secretKey } = nacl.sign.keyPair.fromSeed(derivedSeed);
 			const keypair = Keypair.fromSecretKey(secretKey);
 
 			privateKeyEncoded = bs58.encode(secretKey);
 			publicKeyEncoded = keypair.publicKey.toBase58();
-      
 		} else if (pathType === '60') {
-			const privateKey = Buffer.from(derivedSeed).toString('hex');
+			const hdNode = HDNodeWallet.fromSeed(seed);
+			const child = hdNode.derivePath(path);
+			const privateKey = child.privateKey;
 			privateKeyEncoded = privateKey;
 
-			const wallet = new ethers.Wallet(privateKey);
+			const wallet = new Wallet(privateKey);
 			publicKeyEncoded = wallet.address;
 		} else {
 			toast.error('Unsupported path type.');

@@ -1,9 +1,9 @@
+import RenderContent from "@/components/RenderContent";
 
-import GenerateWallet from '@/components/shared/GenerateWallet';
 const page = () => {
 	return (
-		<main className='  min-h-screen container  flex  items-center flex-col gap-10 '>
-			<GenerateWallet />
+		<main className='max-w-7xl px-16   container  flex  items-center flex-col gap-10 pt-20'>
+			<RenderContent />
 		</main>
 	);
 };

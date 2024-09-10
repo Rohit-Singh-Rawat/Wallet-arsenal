@@ -4,9 +4,18 @@ import { generateKeys } from '@/lib/utils';
 import { generateMnemonic, validateMnemonic } from 'bip39';
 import { useState } from 'react';
 import { toast } from 'sonner';
-const GenerateWallet = () => {
+const GenerateWallet = ({
+	Setwallets,
+	Setmnemonics,
+}: {
+	Setwallets: React.Dispatch<
+		React.SetStateAction<
+			{ type: string; privateKeyEncoded: string; publicKeyEncoded: string; accountIndex: number }[] | null
+		>
+	>;
+	Setmnemonics: React.Dispatch<React.SetStateAction<string | null>>;
+}) => {
 	const [secretPhrase, setSecretPhrase] = useState('');
-	const [mnemonic, setMnemonic] = useState('');
 
 	const generateWallet = () => {
 		let mnemonic = secretPhrase.trim();
@@ -19,10 +28,20 @@ const GenerateWallet = () => {
 		} else {
 			mnemonic = generateMnemonic();
 		}
-		setMnemonic(mnemonic);
 		const solWallet = generateKeys({ mnemonic, accountIndex: 0, pathType: '501' });
 		const EtherWallet = generateKeys({ mnemonic, accountIndex: 0, pathType: '60' });
-		console.log(solWallet, EtherWallet);
+
+		if (solWallet && EtherWallet) {
+			const initialWallets = [
+				{ ...solWallet, type: 'solana', accountIndex: 0 },
+				{ ...EtherWallet, type: 'ethereum', accountIndex: 0 },
+			];
+			localStorage.setItem('wallets', JSON.stringify(initialWallets));
+			localStorage.setItem('mnemonics', mnemonic);
+			Setwallets(initialWallets);
+			Setmnemonics(mnemonic);
+			toast.success('Wallets generated successfully');
+		}
 	};
 
 	return (

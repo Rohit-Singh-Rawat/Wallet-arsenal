@@ -37,18 +37,25 @@ const RenderContent = () => {
 
 	const addNewWallet = (type: 'ethereum' | 'solana') => {
 		if (!mnemonics || !wallets) return;
-		const pathType = type === 'ethereum' ? '60' : '501';
-	const existingIndexesSet = new Set(
-		wallets.filter((w) => w.type === type).map((w) => w.accountIndex)
-	);
-
-	let newIndex = 0;
-	for (let i = 0; i < existingIndexesSet.size + 1; i++) {
-		if (!existingIndexesSet.has(i)) {
-			newIndex = i;
-			break;
+		
+		const existingWalletsOfType = wallets.filter(w => w.type === type);
+		
+		if (existingWalletsOfType.length >= 5) {
+			toast.error(`You can't add more than 5 ${type} wallets.`);
+			return;
 		}
-	}
+
+		const pathType = type === 'ethereum' ? '60' : '501';
+		
+		const existingIndices = existingWalletsOfType.map(w => w.accountIndex).sort((a, b) => a - b);
+		let newIndex = 0;
+		for (let i = 0; i <= existingIndices.length; i++) {
+			if (i !== existingIndices[i]) {
+				newIndex = i;
+				break;
+			}
+		}
+
 		const newWallet = generateKeys({
 			mnemonic: mnemonics,
 			accountIndex: newIndex,
@@ -134,6 +141,7 @@ const RenderContent = () => {
 								<Button
 									onClick={() => addNewWallet('solana')}
 									className='bg-white text-black font-semibold hover:bg-white/80'
+									disabled={wallets.filter(w => w.type === 'solana').length >= 5}
 								>
 									Add Wallet
 								</Button>
@@ -165,6 +173,7 @@ const RenderContent = () => {
 								<Button
 									onClick={() => addNewWallet('ethereum')}
 									className='bg-white text-black font-semibold hover:bg-white/80'
+									disabled={wallets.filter(w => w.type === 'ethereum').length >= 5}
 								>
 									Add Wallet
 								</Button>

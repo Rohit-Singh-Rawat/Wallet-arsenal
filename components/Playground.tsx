@@ -8,7 +8,7 @@ import ActionButtons from './ActionButtons';
 import WalletSection from './WalletSection';
 import { generateKeys } from '@/lib/utils';
 
-const RenderContent = () => {
+const Playground = () => {
 	const [wallets, setWallets] = useState<
 		| { type: string; privateKeyEncoded: string; publicKeyEncoded: string; accountIndex: number }[]
 		| null
@@ -120,4 +120,4 @@ const RenderContent = () => {
 	);
 };
 
-export default RenderContent;
+export default Playground;

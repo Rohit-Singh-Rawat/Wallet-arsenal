@@ -45,8 +45,10 @@ export default function RootLayout({
 				className={`${geistSans.variable} ${geistMono.variable} antialiased flex  items-center bg-mesh flex-col min-h-screen`}
 			>
 				<ReactQueryProvider>
-					<Navbar />
-					{children}
+					<Navbar />{' '}
+					<main className='max-w-7xl lg:px-16 px-2  container  flex  items-center flex-col justify-center min-h-screen'>
+						{children}
+					</main>
 					<Toaster theme='dark' />
 				</ReactQueryProvider>
 			</body>

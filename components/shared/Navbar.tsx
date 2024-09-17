@@ -1,20 +1,18 @@
 'use client';
 import Link from 'next/link';
-import { useState } from 'react';
 import Wallet from '../icons/Wallet';
 import { Button } from '@/components/ui/button';
-import { Drawer,  DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
+import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import DrawerButton from '../icons/Drawer';
 
 const navLinks = [
-	{ name: 'Coin', href: '/coin' },
+	{ name: 'Playground', href: '/playground' },
+	{ name: 'Adapter', href: '/adapter' },
 	{ name: 'Github', href: 'https://github.com' },
 	{ name: 'Twitter', href: 'https://twitter.com' },
 ];
 
 const Navbar = () => {
-	const [hovered, setHovered] = useState('');
-
 	const NavLinks = () => (
 		<>
 			{navLinks.map((link) => (
@@ -22,18 +20,12 @@ const Navbar = () => {
 					key={link.name}
 					href={link.href}
 					className='group relative overflow-hidden'
-					onMouseEnter={() => setHovered(link.name)}
-					onMouseLeave={() => setHovered('')}
 				>
 					<span className='text-sm font-semibold text-gray-300 transition-colors duration-300 group-hover:text-white'>
 						{link.name}
 					</span>
 
-					<span
-						className={`absolute bottom-0 left-0 w-full h-0.5 bg-green-500 transform transition-transform duration-300 ${
-							hovered === link.name ? 'scale-x-100' : 'scale-x-0'
-						}`}
-					></span>
+					<span className='absolute bottom-0 left-0 w-full h-0.5 bg-green-500 transform transition-all duration-300 scale-x-0 group-hover:scale-x-100'></span>
 				</Link>
 			))}
 		</>

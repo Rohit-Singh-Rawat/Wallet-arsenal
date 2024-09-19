@@ -8,8 +8,18 @@ import DrawerButton from '../icons/Drawer';
 const navLinks = [
 	{ name: 'Playground', href: '/playground' },
 	{ name: 'Adapter', href: '/adapter' },
-	{ name: 'Github', href: 'https://github.com' },
-	{ name: 'Twitter', href: 'https://twitter.com' },
+	{
+		name: 'Github',
+		href: 'https://github.com/Rohit-Singh-Rawat/Wallet-arsenal',
+		target: '_blank',
+		rel: 'noopener noreferrer',
+	},
+	{
+		name: 'X',
+		href: 'https://x.com/Spacing_Whale',
+		target: '_blank',
+		rel: 'noopener noreferrer',
+	},
 ];
 
 const Navbar = () => {
@@ -20,6 +30,7 @@ const Navbar = () => {
 					key={link.name}
 					href={link.href}
 					className='group relative overflow-hidden'
+					{...(link.target && { target: link.target, rel: link.rel })}
 				>
 					<span className='text-sm font-semibold text-gray-300 transition-colors duration-300 group-hover:text-white'>
 						{link.name}

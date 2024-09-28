@@ -14,7 +14,7 @@ const MnemoicCard = (props: Props) => {
 	const [copied, setCopied] = useState(false);
 
 	return (
-		<div className='bg-black mt-40 px-4 sm:px-6 md:px-10 p-3 rounded-xl w-full border border-white/10 [font-family:var(--font-geist-mono)]'>
+		<div className='bg-black mt-40 px-4 sm:px-6 md:px-10 p-3 rounded-xl w-full border border-white/10 [-family:var(--font-geist-mono)]'>
 			<Accordion
 				type='single'
 				collapsible

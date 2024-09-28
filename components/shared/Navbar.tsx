@@ -8,6 +8,7 @@ import DrawerButton from '../icons/Drawer';
 const navLinks = [
 	{ name: 'Playground', href: '/playground' },
 	{ name: 'Adapter', href: '/adapter' },
+	{ name: 'Token Launchpad', href: '/launchpad' },
 	{
 		name: 'Github',
 		href: 'https://github.com/Rohit-Singh-Rawat/Wallet-arsenal',

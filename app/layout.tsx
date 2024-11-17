@@ -6,6 +6,7 @@ import { Toaster } from 'sonner';
 import ReactQueryProvider from './providers/QueryClientProvider';
 import WalletProvider from './providers/WalletProvider';
 import '@solana/wallet-adapter-react-ui/styles.css';
+import Bottombar from '@/components/shared/Bottombar';
 const geistSans = localFont({
 	src: './fonts/GeistVF.woff',
 	variable: '--font-geist-sans',
@@ -49,9 +50,10 @@ export default function RootLayout({
 				>
 					<ReactQueryProvider>
 						<Navbar />{' '}
-						<main className='max-w-7xl lg:px-16 px-2  container  flex  items-center flex-col justify-center min-h-screen'>
+						<main className='max-w-7xl lg:px-16 px-2  container  flex  items-center flex-col justify-center min-h-[calc(100vh-48px)]'>
 							{children}
 						</main>
+						<Bottombar />
 						<Toaster theme='dark' />
 					</ReactQueryProvider>
 				</body>

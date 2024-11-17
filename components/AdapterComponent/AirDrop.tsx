@@ -12,11 +12,13 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
+import { useRPCStore } from '@/app/store/RPCStore';
 
 const AirDrop = () => {
 	const [solAmount, setSolAmount] = useState(1);
 	const wallet = useWallet();
 	const { connection } = useConnection();
+	const { cluster } = useRPCStore();
 
 	const handleAirdrop = async () => {
 		if (!wallet.publicKey) return;
@@ -31,10 +33,18 @@ const AirDrop = () => {
 		}
 	};
 
+	if (cluster === 'mainnet') {
+		return (
+			<Button disabled className='bg-white/20 text-gray-500 font-semibold cursor-not-allowed'>
+				Airdrop
+			</Button>
+		);
+	}
+
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button className='bg-white/80 hover:bg-white text-black font-semibold' >Airdrop</Button>
+				<Button className='bg-white/80 hover:bg-white text-black font-semibold'>Airdrop</Button>
 			</DialogTrigger>
 			<DialogContent className='bg-gradient-to-tr from-[#090B0F] to-[#111d17]/80 backdrop-blur-sm border-2 border-gray-600/40 rounded-3xl [font-family:var(--font-geist-mono)]'>
 				<DialogHeader>

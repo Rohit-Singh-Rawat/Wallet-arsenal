@@ -35,7 +35,8 @@ const Send = () => {
 					lamports: parseFloat(amount) * LAMPORTS_PER_SOL,
 				})
 			);
-			await wallet.sendTransaction(transaction, connection);
+			const g = await wallet.sendTransaction(transaction, connection);
+			console.log(g)
 			toast.success('SOL transferred successfully');
 			setOpen(false);
 		} catch (error) {

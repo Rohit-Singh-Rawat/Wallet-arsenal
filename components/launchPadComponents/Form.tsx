@@ -118,6 +118,8 @@ export function LaunchPadForm() {
 		} catch (error) {
 			console.error('Error creating token:', error);
 			toast.error('Failed to create token. Please try again.', { id: 'createToken' });
+			toast.dismiss('uploadMetadata');
+			toast.dismiss('mintTokens');
 		}
 	};
 

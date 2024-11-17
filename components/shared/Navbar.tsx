@@ -4,23 +4,13 @@ import Wallet from '../icons/Wallet';
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import DrawerButton from '../icons/Drawer';
+import RPCSwitch from './RPCSwitch';
 
 const navLinks = [
 	{ name: 'Playground', href: '/playground' },
 	{ name: 'Adapter', href: '/adapter' },
 	{ name: 'Token Launchpad', href: '/launchpad' },
-	{
-		name: 'Github',
-		href: 'https://github.com/Rohit-Singh-Rawat/Wallet-arsenal',
-		target: '_blank',
-		rel: 'noopener noreferrer',
-	},
-	{
-		name: 'X',
-		href: 'https://x.com/Spacing_Whale',
-		target: '_blank',
-		rel: 'noopener noreferrer',
-	},
+	{ name: 'Liquidity Pool', href: '/pool' },
 ];
 
 const Navbar = () => {
@@ -31,7 +21,7 @@ const Navbar = () => {
 					key={link.name}
 					href={link.href}
 					className='group relative overflow-hidden'
-					{...(link.target && { target: link.target, rel: link.rel })}
+
 				>
 					<span className='text-sm font-semibold text-gray-300 transition-colors duration-300 group-hover:text-white'>
 						{link.name}
@@ -59,6 +49,7 @@ const Navbar = () => {
 				</Link>
 				<div className='hidden md:flex items-center space-x-6'>
 					<NavLinks />
+					<RPCSwitch />
 				</div>
 				<Drawer>
 					<DrawerTrigger asChild>
@@ -73,6 +64,7 @@ const Navbar = () => {
 					<DrawerContent className='bg-black border-2 border-zinc-900 '>
 						<div className='mx-auto w-full max-w-sm'>
 							<nav className='flex flex-col space-y-7 p-4 justify-center items-center'>
+								<RPCSwitch />
 								<NavLinks />
 							</nav>
 						</div>
